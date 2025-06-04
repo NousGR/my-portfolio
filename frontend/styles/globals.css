@@ -1,4 +1,4 @@
-/* styles/globals.css */
+/* frontend/styles/globals.css */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap'); /* Import Raleway font */
@@ -7,20 +7,21 @@
 
 :root {
   /* Dark theme as default */
-  --background: oklch(0.17 0.021 255.5); /* Dark Gray/Almost Black */
+  --background: oklch(0.17 0.021 255.5); /* Dark Gray/Almost Black - Base for gradient */
+  --background-gradient-end: oklch(0.20 0.035 270); /* A slightly different dark blue/purple for gradient animation */
   --foreground: oklch(0.98 0.003 247.8); /* Light Gray/White */
   --radius: 0.625rem;
 
-  --card: oklch(0.22 0.025 255.5); /* Slightly lighter dark for cards */
-  --card-foreground: oklch(0.98 0.003 247.8); /* Light Gray/White */
+  --card: oklch(0.22 0.025 255.5); 
+  --card-foreground: oklch(0.98 0.003 247.8); 
 
-  --popover: oklch(0.22 0.025 255.5); /* Similar to card */
+  --popover: oklch(0.22 0.025 255.5); 
   --popover-foreground: oklch(0.98 0.003 247.8);
 
   --primary: oklch(0.55 0.15 255.755); /* A nice shade of Blue */
   --primary-foreground: oklch(0.98 0.003 247.8); /* White text on primary */
 
-  --secondary: oklch(0.3 0.03 250); /* Darker accent */
+  --secondary: oklch(0.3 0.03 250); 
   --secondary-foreground: oklch(0.98 0.003 247.8);
 
   --muted: oklch(0.3 0.03 250);
@@ -29,11 +30,11 @@
   --accent: oklch(0.4 0.04 250);
   --accent-foreground: oklch(0.98 0.003 247.8);
 
-  --destructive: oklch(0.577 0.245 27.325); /* A red for destructive actions, can be kept or adjusted */
+  --destructive: oklch(0.577 0.245 27.325);
   
-  --border: oklch(0.3 0.03 250 / 50%); /* Darker border */
-  --input: oklch(0.3 0.03 250 / 60%);  /* Darker input */
-  --ring: oklch(0.55 0.15 255.755 / 70%); /* Blue for ring, matching primary */
+  --border: oklch(0.3 0.03 250 / 50%); 
+  --input: oklch(0.3 0.03 250 / 60%); 
+  --ring: oklch(0.55 0.15 255.755 / 70%); 
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -50,19 +51,13 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
 
-  /* Custom font for brand name */
   --font-brand: 'Raleway', sans-serif;
 }
 
-/*
-  This part maps our CSS variables to Tailwind's theme.
-  So now, bg-background will use our dark background, text-foreground our light text, etc.
-  No need to change this section unless we add new specific mappings.
-*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans); /* This can be changed later if we want Raleway everywhere */
+  --font-sans: var(--font-geist-sans); 
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -99,42 +94,22 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* The prefers-color-scheme: dark media query might not be needed
-  if our main :root is already dark. Or, it can be used for a *different*
-  dark variant if we ever add a theme switcher.
-  For now, I'll comment it out to avoid confusion as :root is now dark by default.
-*/
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-*/
-
 body {
-  /* These will now use the dark theme variables */
-  background: var(--background);
+  /* Default body styles, using our theme variables */
+  background: var(--background); /* This will be used by the animated gradient */
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif; /* Default body font, can be changed */
+  font-family: Arial, Helvetica, sans-serif; 
 }
 
-/* This .dark class was for the explicit dark mode toggle.
-  If the default is dark, this might be used for a "light mode" toggle later,
-  or a different dark variation.
-  I'll update its variables to be a light theme for now, in case you want to add a toggle.
-  Or we can remove it if the site will always be dark.
-  For now, let's make it a light theme alternative.
-*/
-.light-theme-override { /* Renamed for clarity, you can name it .light or whatever */
-  --background: oklch(1 0 0); /* White */
-  --foreground: oklch(0.129 0.042 264.695); /* Dark text */
+.light-theme-override { 
+  --background: oklch(1 0 0);
+  --background-gradient-end: oklch(0.95 0.01 260); /* Lighter end for light theme gradient */
+  --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755); /* Original primary */
+  --primary: oklch(0.208 0.042 265.755); 
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -146,17 +121,59 @@ body {
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
-  /* Keep chart and sidebar colors from original light theme if needed for this override */
 }
 
 
 @layer base {
   * {
-    /* border-border and outline-ring will use the new dark theme variables by default */
     @apply border-border outline-ring/50;
   }
   body {
-    /* bg-background and text-foreground will use the new dark theme variables by default */
     @apply bg-background text-foreground;
   }
+}
+
+/* Animation Keyframes */
+/* This is for the background gradient animation. It's a slow shift. */
+@keyframes animatedBackgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* This is for the text fade-in and move-up effect. */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Utility Classes */
+/* I'll apply this class to the main container on the homepage. */
+.animated-gradient-background {
+  background: linear-gradient(
+    135deg, 
+    var(--background), 
+    var(--background-gradient-end), 
+    var(--background)
+  );
+  background-size: 400% 400%; /* Needs to be larger than 100% for the animation to work */
+  animation: animatedBackgroundGradient 20s ease infinite; /* 20s duration, infinite loop */
+}
+
+/* I'll use these for the title and paragraph on the homepage. */
+.animate-fadeInUp {
+  opacity: 0; /* Start hidden */
+  animation: fadeInUp 0.8s ease-out forwards; /* 'forwards' keeps the state at the end of the animation */
 }
